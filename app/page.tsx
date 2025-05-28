@@ -2,7 +2,8 @@
 
 import { getProfile } from "@/lib/sanity.query";
 import type { ProfileType } from "@/types";
-import HeroSvg from "./icons/HeroSvg";
+import HeroSvg from "./animation/HeroSvg";
+import { Slide } from "./animation/Slide";
 import Job from "./components/Job";
 
 export default async function Home() {
@@ -37,7 +38,9 @@ export default async function Home() {
               </ul>
             </div>
           ))}
-        <HeroSvg />
+        <Slide delay={0.14}>
+          <HeroSvg />
+        </Slide>
       </section>
       <Job />
     </main>
