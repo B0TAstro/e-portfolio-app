@@ -2,8 +2,8 @@
 
 import { getProfile } from "@/lib/sanity.query";
 import type { ProfileType } from "@/types";
-import HeroSvg from "./animation/HeroSvg";
-import { Slide } from "./animation/Slide";
+import HeroSvg from "./assets/HeroSvg";
+import { Slide } from "./assets/Slide";
 import Job from "./components/Job";
 
 export default async function Home() {

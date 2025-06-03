@@ -3,27 +3,30 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Navbar from "./components/global/navbar";
-import Footer from "./components/global/footer";
+import Navbar from "./components/global/Navbar";
+import Footer from "./components/global/Footer";
+import { Providers } from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Sanity Next.js Portfolio Site", // Update the title here later
-  description: "A personal portfolio site built with Sanity and Next.js", // Update the description here later
-  metadataBase: new URL("https://ton-site.com"), // Update the URL here later
-  openGraph: {
-    images: "add-your-open-graph-image-url-here",
-  },
+  title: "Portfolio - Soutenance Finale MMI",
+  description: "A personal portfolio site built with Sanity and Next.js",
+  metadataBase: new URL("https://e-portfolio-app-six.vercel.app/"),
+  // openGraph: {
+  //   images: "add-your-open-graph-image-url-here",
+  // },
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body className={`${inter.className} bg-zinc-900 text-white`}>
-        <Navbar />
-        {children}
-        <Footer />
+        <Providers>
+          <Navbar />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

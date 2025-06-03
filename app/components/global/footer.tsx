@@ -1,3 +1,5 @@
+// app/components/global/Footer.tsx
+
 export default function Footer() {
     return (
       <footer className="border-t border-zinc-800 mt-44">
@@ -8,7 +10,7 @@ export default function Footer() {
   
           <small className="hover:text-white duration-200">
             <a
-              href="https://github.com/Evavic44/sanity-nextjs-site"
+              href="https://github.com/B0TAstro/e-portfolio-app/"
               target="_blank"
               rel="noreferrer noopener"
             >
