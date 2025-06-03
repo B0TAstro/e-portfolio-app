@@ -3,35 +3,30 @@
 import { groq } from "next-sanity";
 import client from "./sanity.client";
 
-export async function getProfile() {
+export async function getHomeData() {
   return client.fetch(
-    groq`*[_type == "profile"]{
+    groq`*[_type == "home"]{
       _id,
-      fullName,
-      headline,
-      profileImage {alt, "image": asset->url},
-      shortBio,
-      location,
-      fullBio,
+      nomComplet,
+      titre,
+      imageProfile {alt, "image": asset->url},
+      bioCourtе,
+      localisation,
+      bioComplete,
       email,
-      "resumeURL": resumeURL.asset->url,
-      socialLinks,
-      skills
-    }`
-  );
-}
-
-export async function getJob() {
-  return client.fetch(
-    groq`*[_type == "job"]{
-      _id,
-      name,
-      jobTitle,
-      "logo": logo.asset->url,
-      url,
-      description,
-      startDate,
-      endDate,
+      "cv": cv.asset->url,
+      reseauxSociaux,
+      competences,
+      experiences[]{
+        nomEntreprise,
+        poste,
+        "logo": logo.asset->url,
+        url,
+        description,
+        dateDebut,
+        dateFin,
+        enCours
+      }
     }`
   );
 }
@@ -48,7 +43,6 @@ export async function getProjects() {
   );
 }
 
-
 export async function getSingleProject(slug: string) {
   return await client.fetch(
     groq`*[_type == "project" && slug.current == $slug][0]{
@@ -56,7 +50,10 @@ export async function getSingleProject(slug: string) {
       tagline,
       description,
       projectUrl,
-      "coverImage": coverImage.asset->url
+      coverImage {
+        alt,
+        "image": asset->url
+      }
     }`,
     { slug }
   );

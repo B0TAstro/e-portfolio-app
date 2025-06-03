@@ -1,33 +1,41 @@
 // types/index.ts
 
+// types/index.ts
+
 import { PortableTextBlock } from "sanity";
 
-export type ProfileType = {
-  _id: string,
-  fullName: string,
-  headline: string,
-  profileImage: {
-    alt: string,
-    image: string
-  },
-  shortBio: string,
-  email: string,
-  fullBio: PortableTextBlock[],
-  location: string,
-  resumeURL: string,
-  socialLinks: string[],
-  skills: string[],
+export type HomeType = {
+  _id: string;
+  nomComplet: string;
+  titre: string;
+  imageProfile: {
+    alt: string;
+    image: string;
+  };
+  bioCourtе: string;
+  email: string;
+  localisation: string;
+  bioComplete: PortableTextBlock[];
+  cv: string;
+  reseauxSociaux: {
+    github?: string;
+    linkedin?: string;
+    twitter?: string;
+    instagram?: string;
+  };
+  competences: string[];
+  experiences: ExperienceType[];
 };
 
-export type JobType = {
-  _id: string;
-  name: string;
-  jobTitle: string;
+export type ExperienceType = {
+  nomEntreprise: string;
+  poste: string;
   logo: string;
   url: string;
   description: string;
-  startDate: Date;
-  endDate: Date;
+  dateDebut: Date;
+  dateFin?: Date;
+  enCours?: boolean;
 };
 
 export type ProjectType = {
