@@ -84,7 +84,7 @@ export default async function Home() {
       <section className="mb-16">
         <h2 className="font-semibold text-4xl mb-4">Compétences & Technologies</h2>
         <p className="text-zinc-400 w-1/2 mb-8">
-          Les compétences, soft skills et technologies/outils que j'ai appris et que je maîtrise :
+          Les compétences, soft skills et technologies/outils que j&apos;ai appris et que je maîtrise :
         </p>
 
         <ul className="flex flex-wrap items-center gap-4">
@@ -103,7 +103,7 @@ export default async function Home() {
         <div className="mb-8">
           <h2 className="font-semibold text-4xl mb-4">Expériences Professionnelles</h2>
           <p className="text-zinc-400">
-            Mon parcours professionnel et les expériences qui m'ont formé
+            Mon parcours professionnel et les expériences qui m&apos;ont formé
           </p>
         </div>
 
