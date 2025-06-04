@@ -5,17 +5,16 @@ import client from "./sanity.client";
 
 export async function getHomeData() {
   return client.fetch(
-    groq`*[_type == "home"]{
+    groq`*[_type == "home"][0]{
       _id,
       nomComplet,
       titre,
       imageProfile {alt, "image": asset->url},
-      bioCourtе,
+      bioCourte,
       localisation,
       bioComplete,
       email,
       "cv": cv.asset->url,
-      reseauxSociaux,
       competences,
       experiences[]{
         nomEntreprise,

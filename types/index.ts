@@ -1,7 +1,5 @@
 // types/index.ts
 
-// types/index.ts
-
 import { PortableTextBlock } from "sanity";
 
 export type HomeType = {
@@ -12,17 +10,11 @@ export type HomeType = {
     alt: string;
     image: string;
   };
-  bioCourtе: string;
+  bioCourte: string;
   email: string;
   localisation: string;
   bioComplete: PortableTextBlock[];
   cv: string;
-  reseauxSociaux: {
-    github?: string;
-    linkedin?: string;
-    twitter?: string;
-    instagram?: string;
-  };
   competences: string[];
   experiences: ExperienceType[];
 };
