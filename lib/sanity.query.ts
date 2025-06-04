@@ -30,14 +30,50 @@ export async function getHomeData() {
   );
 }
 
-export async function getProjects() {
+export async function getIUTData() {
   return client.fetch(
-    groq`*[_type == "project"]{
+    groq`*[_type == "iut"][0]{
+      _id,
+      titre,
+      sousTitre,
+      description
+    }`
+  );
+}
+
+export async function getProjectsByCategory(category: string) {
+  return client.fetch(
+    groq`*[_type == "project" && categorie == $category] | order(_createdAt desc){
       _id, 
       name,
       "slug": slug.current,
-      tagline,
-      "logo": logo.asset->url,
+      categorie,
+      competences,
+      contexte,
+      duree,
+      periode,
+      coverImage {
+        alt,
+        "image": asset->url
+      },
+      description
+    }`,
+    { category }
+  );
+}
+
+export async function getProjects() {
+  return client.fetch(
+    groq`*[_type == "project"] | order(_createdAt desc){
+      _id, 
+      name,
+      "slug": slug.current,
+      categorie,
+      competences,
+      coverImage {
+        alt,
+        "image": asset->url
+      }
     }`
   );
 }
@@ -45,15 +81,47 @@ export async function getProjects() {
 export async function getSingleProject(slug: string) {
   return await client.fetch(
     groq`*[_type == "project" && slug.current == $slug][0]{
+      _id,
       name,
-      tagline,
+      "slug": slug.current,
       description,
       projectUrl,
+      categorie,
+      competences,
+      contexte,
+      duree,
+      periode,
+      demarches,
+      resultats,
+      ressourcesMobilisees,
+      coverImage {
+        alt,
+        "image": asset->url
+      },
+      galerie[]{
+        "image": asset->url,
+        alt,
+        caption
+      }
+    }`,
+    { slug }
+  );
+}
+
+export async function getProjectsByCompetence(competence: string) {
+  return client.fetch(
+    groq`*[_type == "project" && $competence in competences] | order(_createdAt desc){
+      _id, 
+      name,
+      "slug": slug.current,
+      categorie,
+      competences,
+      contexte,
       coverImage {
         alt,
         "image": asset->url
       }
     }`,
-    { slug }
+    { competence }
   );
 }

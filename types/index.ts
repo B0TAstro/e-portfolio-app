@@ -30,16 +30,37 @@ export type ExperienceType = {
   enCours?: boolean;
 };
 
+export type IUTType = {
+  _id: string;
+  titre: string;
+  sousTitre?: string;
+  description: PortableTextBlock[];
+};
+
 export type ProjectType = {
   _id: string;
   name: string;
   slug: string;
-  tagline: string;
-  projectUrl: string;
-  logo: string;
-  coverImage: {
+  projectUrl?: string;
+  categorie: 'iut' | 'alternance' | 'perso-pro';
+  competences: string[];
+  contexte?: string;
+  duree?: string;
+  periode?: string;
+  demarches?: PortableTextBlock[];
+  resultats?: PortableTextBlock[];
+  ressourcesMobilisees?: string[];
+  coverImage?: {
     alt: string | null;
     image: string;
   };
   description: PortableTextBlock[];
+  galerie?: {
+    image: string;
+    alt: string;
+    caption?: string;
+  }[];
 };
+
+export type CategoryType = 'iut' | 'alternance' | 'perso-pro';
+export type CompetenceType = 'developper' | 'entreprendre' | 'concevoir' | 'exprimer' | 'comprendre';
