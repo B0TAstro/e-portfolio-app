@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { getSingleProject } from "@/lib/sanity.query";
 import type { ProjectType } from "@/types";
 import { PortableText } from "@portabletext/react";
-import fallBackImage from "../../../../public/images/fallback-project-image.webp";
+import fallBackImage from "@/public/images/fallback-project-image.webp";
 
 type Props = {
   params: Promise<{ project: string }>;
