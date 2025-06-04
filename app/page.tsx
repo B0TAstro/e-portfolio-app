@@ -22,10 +22,10 @@ export default async function Home() {
   // console.log(homeData);
 
   return (
-    <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
-      <section className="flex xl:flex-row flex-col xl:items-center items-start xl:justify-center justify-between gap-x-12 mb-16">
-        <div className="lg:max-w-2xl max-w-2xl">
-          <h1 className="text-3xl font-bold tracking-tight sm:text-5xl mb-6 lg:leading-[3.7rem] leading-tight lg:min-w-[700px] min-w-full">
+    <main className="max-w-7xl mx-auto md:px-16 px-6">
+      <section className="flex xl:flex-row flex-col items-center justify-between mb-16 overflow-hidden">
+        <div className="xl:max-w-2xl w-full">
+          <h1 className="text-3xl font-bold tracking-tight sm:text-5xl mb-4 leading-tight lg:min-w-[700px] min-w-full">
             {homeData.titre}
           </h1>
           <p className="text-base text-zinc-400 leading-relaxed mb-8">
@@ -36,70 +36,62 @@ export default async function Home() {
         <div>
           <RiveAvatar />
         </div>
-      </section >
+      </section>
 
-      < section className="mt-32" >
-        <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-6 justify-items-center">
-          <div className="order-2 lg:order-none">
-            <h2 className="lg:text-4xl text-3xl font-bold mb-8">
-              À propos de moi
-            </h2>
-            <p className="text-lg text-zinc-300 mb-6">
-              Je suis {homeData.nomComplet}, basé à {homeData.localisation}.
-            </p>
+      <section className="grid lg:grid-cols-2 grid-cols-1 justify-items-center mb-8">
+        <div>
+          <h2 className="lg:text-4xl text-3xl font-bold mb-4">
+            À propos de moi
+          </h2>
+          <p className="text-lg text-zinc-300 mb-8">
+            Je suis {homeData.nomComplet}, basé à {homeData.localisation}.
+          </p>
 
-            <div className="flex flex-col gap-y-3 text-zinc-400 leading-relaxed">
-              <PortableText value={homeData.bioComplete} />
-            </div>
-          </div>
-
-          <div className="flex flex-col lg:justify-self-center justify-self-start gap-y-8 lg:order-1 order-none mb-12">
-            <div>
-              {homeData.imageProfile?.image && (
-                <Image
-                  className="rounded-2xl mb-4 object-cover max-h-96 min-h-96 bg-top bg-[#1d1d20]"
-                  src={homeData.imageProfile.image}
-                  width={400}
-                  height={400}
-                  quality={100}
-                  alt={homeData.imageProfile.alt || "Image de profil"}
-                />
-              )}
-
-              <a
-                href={`${homeData.cv}?dl=${homeData.nomComplet}_CV`}
-                className="flex items-center justify-center gap-x-2 bg-[#1d1d20] border border-transparent hover:border-zinc-700 rounded-md duration-200 py-2 text-center cursor-pointer font-medium mb-4"
-              >
-                <BiFile className="text-base" /> Télécharger mon CV
-              </a>
-            </div>
-
-            <ul>
-              <li>
-                <a
-                  href={`mailto:${homeData.email}`}
-                  className="flex items-center gap-x-2 hover:text-purple-400 duration-300"
-                >
-                  <BiEnvelope className="text-lg" />
-                  {homeData.email}
-                </a>
-              </li>
-            </ul>
+          <div className="flex flex-col gap-2 text-zinc-400 leading-relaxed">
+            <PortableText value={homeData.bioComplete} />
           </div>
         </div>
-      </section >
 
-      < section className="mt-24 max-w-2xl" >
-        <h2 className="font-semibold text-4xl mb-4">Compétences</h2>
-        <p className="text-zinc-400 max-w-lg mb-8">
-          Les technologies et outils que je maîtrise :
+        <div className="flex flex-col lg:justify-self-end justify-self-center lg:mt-0 mt-8">
+          <div>
+            {homeData.imageProfile?.image && (
+              <Image
+                className="rounded-2xl mb-4 object-cover max-h-96 min-h-96 bg-top bg-[#1d1d20]"
+                src={homeData.imageProfile.image}
+                width={400}
+                height={400}
+                quality={100}
+                alt={homeData.imageProfile.alt || "Image de profil"}
+              />
+            )}
+            <a
+              href={`${homeData.cv}?dl=${homeData.nomComplet}_CV`}
+              className="flex items-center justify-center gap-x-2 bg-[#1d1d20] border border-transparent hover:border-zinc-700 rounded-md duration-200 py-2 text-center cursor-pointer font-medium mb-4"
+            >
+              <BiFile className="text-base" /> Télécharger mon CV
+            </a>
+          </div>
+          <a
+            href={`mailto:${homeData.email}`}
+            className="flex items-center justify-center gap-x-3 hover:text-green-400 duration-300"
+          >
+            <BiEnvelope className="text-lg" />
+            {homeData.email}
+          </a>
+        </div>
+      </section>
+
+      <section className="mb-16">
+        <h2 className="font-semibold text-4xl mb-4">Compétences & Technologies</h2>
+        <p className="text-zinc-400 w-1/2 mb-8">
+          Les compétences, soft skills et technologies/outils que j'ai appris et que je maîtrise :
         </p>
 
-        <ul className="flex flex-wrap items-center gap-3">
+        <ul className="flex flex-wrap items-center gap-4">
           {homeData.competences?.map((competence, id) => (
             <li
               key={id}
-              className="bg-[#1d1d20] border border-transparent hover:border-zinc-700 rounded-md px-3 py-2 text-sm"
+              className="bg-[#1d1d20] border border-zinc-700 rounded-md px-3 py-2 text-sm hover:text-green-400 hover:scale-103 hover:shadow-lg transition-all duration-300 cursor-pointer"
             >
               {competence}
             </li>
@@ -107,15 +99,15 @@ export default async function Home() {
         </ul>
       </section >
 
-      < section className="mt-32" >
-        <div className="mb-16">
+      <section>
+        <div className="mb-8">
           <h2 className="font-semibold text-4xl mb-4">Expériences Professionnelles</h2>
-          <p className="text-zinc-400 max-w-lg">
+          <p className="text-zinc-400">
             Mon parcours professionnel et les expériences qui m'ont formé
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-12 gap-y-10">
+        <div className="grid lg:grid-cols-2 grid-cols-1 gap-12">
           {homeData.experiences?.map((experience, index) => (
             <div
               key={index}
@@ -153,7 +145,7 @@ export default async function Home() {
             </div>
           ))}
         </div>
-      </section >
-    </main >
+      </section>
+    </main>
   );
 }

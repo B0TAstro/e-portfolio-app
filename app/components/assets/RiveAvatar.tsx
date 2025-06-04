@@ -6,12 +6,11 @@ export default function RiveAvatar() {
   const { RiveComponent } = useRive({
     src: "/animations/rimix-face.riv",
     autoplay: true,
-    animations: ["Idle"],
     stateMachines: ["State Machine 1"],
   });
 
   return (
-    <div className="w-[450px] h-[450px] mx-auto bg-transparent">
+    <div className="w-[450px] h-[450px] mx-auto bg-transparent cursor-pointer">
       <RiveComponent />
     </div>
   );
