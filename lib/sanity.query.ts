@@ -56,7 +56,12 @@ export async function getProjectsByCategory(category: string) {
         alt,
         "image": asset->url
       },
-      description
+      description,
+      logo {
+        alt,
+        "image": asset->url
+      },
+      tagline
     }`,
     { category }
   );
@@ -71,6 +76,10 @@ export async function getProjects() {
       categorie,
       competences,
       coverImage {
+        alt,
+        "image": asset->url
+      },
+      logo {
         alt,
         "image": asset->url
       }
@@ -102,7 +111,12 @@ export async function getSingleProject(slug: string) {
         "image": asset->url,
         alt,
         caption
-      }
+      },
+      logo {
+        alt,
+        "image": asset->url
+      },
+      tagline
     }`,
     { slug }
   );
@@ -118,6 +132,10 @@ export async function getProjectsByCompetence(competence: string) {
       competences,
       contexte,
       coverImage {
+        alt,
+        "image": asset->url
+      },
+      logo {
         alt,
         "image": asset->url
       }

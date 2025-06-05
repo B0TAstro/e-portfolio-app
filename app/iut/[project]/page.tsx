@@ -13,10 +13,16 @@ import {
   HiClock,
   HiCalendar,
   HiLightBulb,
-  HiChartBar
+  HiChartBar,
+  HiSpeakerphone,
+  HiChatAlt
 } from "react-icons/hi";
-import { BiCode, BiPalette, BiBrain } from "react-icons/bi";
-import { HiSpeakerphone } from "react-icons/hi";
+import {
+  BiCode,
+  BiPalette,
+  BiBrain
+} from "react-icons/bi";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: Promise<{ project: string }>;
@@ -66,30 +72,11 @@ export default async function ProjectPage({ params }: Props) {
   const project: ProjectType = await getSingleProject(slug);
 
   if (!project) {
-    return (
-      <main className="max-w-6xl mx-auto lg:px-16 px-8 mb-16">
-        <div className="text-center py-16">
-          <h1 className="text-2xl font-bold text-zinc-400 mb-4">
-            Projet non trouvé
-          </h1>
-          <p className="text-zinc-500 mb-8">
-            Ce projet n'existe pas ou a été supprimé.
-          </p>
-          <Link
-            href="/iut"
-            className="inline-flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors"
-          >
-            <HiArrowLeft />
-            Retour aux projets IUT
-          </Link>
-        </div>
-      </main>
-    );
+    notFound();
   }
 
   return (
-    <main className="max-w-6xl mx-auto lg:px-16 px-8 mb-16">
-      {/* Navigation */}
+    <main className="max-w-7xl mx-auto lg:px-16 px-8 mb-16">
       <Link
         href="/iut"
         className="inline-flex items-center gap-2 text-zinc-400 hover:text-green-400 transition-colors mb-8 group"
@@ -98,210 +85,153 @@ export default async function ProjectPage({ params }: Props) {
         Retour aux projets IUT
       </Link>
 
-      {/* Header */}
-      <div className="max-w-4xl mb-8">
-        <div className="flex items-start justify-between mb-6">
-          <div className="flex-1">
-            <div className="flex items-center gap-2 mb-3">
-              <HiAcademicCap className="text-green-400" />
-              <span className="text-sm font-mono text-zinc-400 uppercase tracking-wider">
-                Projet IUT
-              </span>
-            </div>
+      <section>
+        <div className="flex items-center justify-between mb-3">
+          <h1 className="font-bold lg:text-5xl text-3xl lg:leading-tight">
+            {project.name}
+          </h1>
+          <a
+            href={project.projectUrl}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="inline-flex items-center justify-center gap-2 bg-[#1d1d20] border border-zinc-700 rounded-md px-3 py-2 text-base hover:text-green-400 hover:scale-103 hover:shadow-lg transition-all duration-300 cursor-pointer"
+          >
+            <HiExternalLink />
+            Voir le projet
+          </a>
+        </div>
 
-            <h1 className="font-bold lg:text-5xl text-3xl lg:leading-tight mb-4">
-              {project.name}
-            </h1>
+        <div className="flex flex-wrap gap-8 text-sm text-zinc-400 mb-8">
+          <div className="flex items-center gap-2">
+            <HiAcademicCap className="text-green-400" />
+            <span>{contexteLabels[project.contexte as keyof typeof contexteLabels] || project.contexte}</span>
           </div>
-
-          {project.projectUrl && (
-            <a
-              href={project.projectUrl}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white border border-transparent rounded-lg px-6 py-3 transition-colors duration-300 font-medium"
-            >
-              <HiExternalLink />
-              Voir le projet
-            </a>
-          )}
+          <div className="flex items-center gap-2">
+            <HiClock className="text-green-400" />
+            <span>{project.duree}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <HiCalendar className="text-green-400" />
+            <span>{project.periode}</span>
+          </div>
         </div>
 
-        {/* Métadonnées */}
-        <div className="flex flex-wrap gap-6 text-sm text-zinc-400 mb-6">
-          {project.contexte && (
-            <div className="flex items-center gap-2">
-              <HiAcademicCap className="text-green-400" />
-              <span>{contexteLabels[project.contexte as keyof typeof contexteLabels] || project.contexte}</span>
-            </div>
-          )}
-          {project.duree && (
-            <div className="flex items-center gap-2">
-              <HiClock className="text-green-400" />
-              <span>{project.duree}</span>
-            </div>
-          )}
-          {project.periode && (
-            <div className="flex items-center gap-2">
-              <HiCalendar className="text-green-400" />
-              <span>{project.periode}</span>
-            </div>
-          )}
-        </div>
-
-        {/* Compétences */}
-        {project.competences && project.competences.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-8">
-            {project.competences.map((competence, index) => {
-              const config = competenceConfig[competence as keyof typeof competenceConfig];
-              if (!config) return null;
-
-              const IconComponent = config.icon;
-
-              return (
-                <div
-                  key={index}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm border ${config.color}`}
-                >
-                  <IconComponent className="w-4 h-4" />
-                  <span>{config.label}</span>
-                </div>
-              );
-            })}
+        {project.coverImage && (
+          <div className="mb-8">
+            <Image
+              src={project.coverImage.image}
+              width={1920}
+              height={1080}
+              alt={project.coverImage.alt || project.name}
+              className="w-full h-150 object-cover rounded-xl border border-zinc-800"
+            />
           </div>
         )}
-      </div>
 
-      {/* Image de couverture */}
-      {project.coverImage && (
-        <div className="mb-12">
-          <Image
-            src={project.coverImage.image}
-            width={1200}
-            height={600}
-            alt={project.coverImage.alt || project.name}
-            className="w-full h-96 object-cover rounded-xl border border-zinc-800"
-          />
-        </div>
-      )}
-
-      {/* Contenu du projet */}
-      <div className="grid lg:grid-cols-3 gap-12">
-        {/* Contenu principal */}
-        <div className="lg:col-span-2 space-y-12">
-          {/* Description */}
-          {project.description && project.description.length > 0 && (
-            <section>
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                Description du projet
-              </h2>
-              <div className="prose prose-invert prose-lg max-w-none">
-                <PortableText value={project.description} />
-              </div>
-            </section>
-          )}
-
-          {/* Démarches */}
-          {project.demarches && project.demarches.length > 0 && (
-            <section>
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                <HiLightBulb className="text-green-400" />
-                Démarches
-              </h2>
-              <div className="prose prose-invert prose-lg max-w-none">
-                <PortableText value={project.demarches} />
-              </div>
-            </section>
-          )}
-
-          {/* Résultats */}
-          {project.resultats && project.resultats.length > 0 && (
-            <section>
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                <HiChartBar className="text-green-400" />
-                Résultats
-              </h2>
-              <div className="prose prose-invert prose-lg max-w-none">
-                <PortableText value={project.resultats} />
-              </div>
-            </section>
-          )}
-
-          {/* Galerie */}
-          {project.galerie && project.galerie.length > 0 && (
-            <section>
-              <h2 className="text-2xl font-bold mb-6">Galerie</h2>
-              <div className="grid md:grid-cols-2 gap-4">
-                {project.galerie.map((image, index) => (
-                  <div key={index} className="space-y-2">
-                    <Image
-                      src={image.image}
-                      width={600}
-                      height={400}
-                      alt={image.alt || `Image ${index + 1}`}
-                      className="w-full h-64 object-cover rounded-lg border border-zinc-800"
-                    />
-                    {image.caption && (
-                      <p className="text-sm text-zinc-400 italic">{image.caption}</p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
-        </div>
-
-        {/* Sidebar */}
-        <div className="space-y-8">
-          {/* Ressources mobilisées */}
-          {project.ressourcesMobilisees && project.ressourcesMobilisees.length > 0 && (
-            <section className="bg-[#1d1d20] border border-zinc-800 rounded-xl p-6">
-              <h3 className="text-lg font-bold mb-4">Ressources mobilisées</h3>
-              <div className="flex flex-wrap gap-2">
-                {project.ressourcesMobilisees.map((ressource, index) => (
-                  <span
-                    key={index}
-                    className="bg-zinc-800 border border-zinc-700 rounded-full px-3 py-1 text-sm text-zinc-300"
-                  >
-                    {ressource}
-                  </span>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* Informations du projet */}
-          <section className="bg-[#1d1d20] border border-zinc-800 rounded-xl p-6">
-            <h3 className="text-lg font-bold mb-4">Informations</h3>
-            <div className="space-y-3 text-sm">
-              <div className="flex justify-between">
-                <span className="text-zinc-400">Catégorie</span>
-                <span className="text-zinc-300 capitalize">{project.categorie}</span>
-              </div>
-              {project.contexte && (
-                <div className="flex justify-between">
-                  <span className="text-zinc-400">Contexte</span>
-                  <span className="text-zinc-300">
-                    {contexteLabels[project.contexte as keyof typeof contexteLabels] || project.contexte}
-                  </span>
+        <div className="grid lg:grid-cols-3 gap-4">
+          <div className="lg:col-span-2 space-y-8">
+            {project.description && project.description.length > 0 && (
+              <div>
+                <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
+                  <HiChatAlt className="text-green-400" />
+                  Description du projet
+                </h2>
+                <div className="prose prose-invert prose-lg max-w-none">
+                  <PortableText value={project.description} />
                 </div>
-              )}
-              {project.duree && (
-                <div className="flex justify-between">
-                  <span className="text-zinc-400">Durée</span>
-                  <span className="text-zinc-300">{project.duree}</span>
+              </div>
+            )}
+
+            {project.demarches && project.demarches.length > 0 && (
+              <div>
+                <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
+                  <HiLightBulb className="text-green-400" />
+                  Démarches
+                </h2>
+                <div className="prose prose-invert prose-lg max-w-none">
+                  <PortableText value={project.demarches} />
                 </div>
-              )}
-              {project.periode && (
-                <div className="flex justify-between">
-                  <span className="text-zinc-400">Période</span>
-                  <span className="text-zinc-300">{project.periode}</span>
+              </div>
+            )}
+
+            {project.resultats && project.resultats.length > 0 && (
+              <div>
+                <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
+                  <HiChartBar className="text-green-400" />
+                  Résultats
+                </h2>
+                <div className="prose prose-invert prose-lg max-w-none">
+                  <PortableText value={project.resultats} />
                 </div>
-              )}
-            </div>
-          </section>
+              </div>
+            )}
+
+            {project.galerie && project.galerie.length > 0 && (
+              <div>
+                <h2 className="text-2xl font-bold mb-2">Galerie</h2>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {project.galerie.map((image, index) => (
+                    <div key={index} className="space-y-2">
+                      <Image
+                        src={image.image}
+                        width={600}
+                        height={400}
+                        alt={image.alt || `Image ${index + 1}`}
+                        className="w-full h-64 object-cover rounded-lg border border-zinc-800"
+                      />
+                      {image.caption && (
+                        <p className="text-sm text-zinc-400 italic">{image.caption}</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-y-4">
+            {project.competences && project.competences.length > 0 && (
+              <div className="bg-[#1d1d20] border border-zinc-800 rounded-xl p-6">
+                <h3 className="text-lg font-bold mb-4">Compétences</h3>
+                <div className="flex flex-wrap gap-3">
+                  {project.competences.map((competence, index) => {
+                    const config = competenceConfig[competence as keyof typeof competenceConfig];
+                    if (!config) return null;
+
+                    const IconComponent = config.icon;
+
+                    return (
+                      <div
+                        key={index}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm border ${config.color}`}
+                      >
+                        <IconComponent className="w-4 h-4" />
+                        <span>{config.label}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {project.ressourcesMobilisees && project.ressourcesMobilisees.length > 0 && (
+              <div className="bg-[#1d1d20] border border-zinc-800 rounded-xl p-6">
+                <h3 className="text-lg font-bold mb-4">Ressources mobilisées</h3>
+                <div className="flex flex-wrap gap-2">
+                  {project.ressourcesMobilisees.map((ressource, index) => (
+                    <span
+                      key={index}
+                      className="bg-zinc-800 border border-zinc-700 rounded-full px-3 py-1 text-sm text-zinc-300"
+                    >
+                      {ressource}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </section>
     </main>
   );
 }

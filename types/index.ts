@@ -42,6 +42,11 @@ export type ProjectType = {
   name: string;
   slug: string;
   projectUrl?: string;
+  logo?: {
+    alt: string | null;
+    image: string;
+  };
+  tagline?: string;
   categorie: 'iut' | 'alternance' | 'perso-pro';
   competences: string[];
   contexte?: string;
