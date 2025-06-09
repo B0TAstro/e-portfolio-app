@@ -1,7 +1,6 @@
 // app/components/global/Theme.tsx
 
 "use client";
-import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import SunIcon from "../assets/SunIcon";
 import MoonIcon from "../assets/MoonIcon";
