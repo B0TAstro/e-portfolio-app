@@ -1,31 +1,33 @@
-// app/iut/page.tsx
+// app/perso-pro/page.tsx
 
 import Link from "next/link";
 import Image from "next/image";
-import { getIUTData, getProjectsByCategory } from "@/lib/sanity.query";
-import type { IUTType, ProjectType } from "@/types";
+import { getPersoProData, getProjectsByCategory } from "@/lib/sanity.query";
+import type { PersoProType, ProjectType } from "@/types";
 import { PortableText } from "@portabletext/react";
-import { HiAcademicCap, HiClock } from "react-icons/hi";
+import { HiUser, HiClock } from "react-icons/hi";
 
-export default async function IUTPage() {
-  const iutData: IUTType = await getIUTData();
-  const projects: ProjectType[] = await getProjectsByCategory("iut");
+export default async function PersoProPage() {
+  const persoProData: PersoProType = await getPersoProData();
+  const projects: ProjectType[] = await getProjectsByCategory("perso-pro");
 
   return (
     <main className="max-w-7xl mx-auto md:px-16 px-6 mb-16">
       <section className="grid lg:grid-cols-1 gap-12 mb-16">
         <div className="flex flex-col justify-center">
           <h1 className="text-4xl lg:text-6xl font-bold tracking-tight mb-6 leading-tight">
-            {iutData?.titre || "Projets à l'IUT"}
+            {persoProData?.titre || "Projets Personnels & Professionnels"}
           </h1>
 
-          <h2 className="text-xl text-zinc-300 mb-6">
-            {iutData.sousTitre}
-          </h2>
+          {persoProData?.sousTitre && (
+            <h2 className="text-xl text-zinc-300 mb-6">
+              {persoProData.sousTitre}
+            </h2>
+          )}
 
-          {iutData?.description && (
-            <div className="text-base text-zinc-400 leading-relaxed prose prose-invert max-w-none">
-              <PortableText value={iutData.description} />
+          {persoProData?.description && (
+            <div className="text-base text-zinc-400 leading-relaxed prose prose-invert max-w-none mb-8">
+              <PortableText value={persoProData.description} />
             </div>
           )}
         </div>
@@ -40,7 +42,7 @@ export default async function IUTPage() {
           <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {projects.map((project) => (
               <Link
-                href={`/iut/${project.slug}`}
+                href={`/perso-pro/${project.slug}`}
                 key={project._id}
                 className="group bg-[#1d1d20] border border-zinc-800 hover:border-green-500/30 rounded-xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg flex"
               >
@@ -54,7 +56,7 @@ export default async function IUTPage() {
                       className="dark:bg-zinc-800 bg-zinc-100 rounded-md p-1"
                     />
                   ) : (
-                    <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-green-400 rounded-lg flex items-center justify-center">
+                    <div className="w-14 h-14 bg-gradient-to-br from-purple-400 to-blue-500 rounded-lg flex items-center justify-center">
                       <span className="text-white font-bold text-xl">
                         {project.name.charAt(0).toUpperCase()}
                       </span>
@@ -75,7 +77,7 @@ export default async function IUTPage() {
                   <div className="flex items-center gap-5 text-xs text-zinc-500 mt-4">
                     {project.contexte && (
                       <div className="flex items-center gap-2">
-                        <HiAcademicCap className="flex-shrink-0 text-green-400" />
+                        <HiUser className="flex-shrink-0 text-green-400" />
                         <span>
                           {project.contexte === 'sae' ? 'SAE' :
                             project.contexte === 'ressource' ? 'Ressource pédagogique' :
@@ -98,12 +100,12 @@ export default async function IUTPage() {
           </div>
         ) : (
           <div className="text-center py-12">
-            <HiAcademicCap className="mx-auto text-6xl text-zinc-600 mb-4" />
+            <HiUser className="mx-auto text-6xl text-zinc-600 mb-4" />
             <h3 className="text-xl font-semibold text-zinc-400 mb-2">
-              Aucun projet IUT pour le moment
+              Aucun projet Perso/Pro pour le moment
             </h3>
             <p className="text-zinc-500">
-              Les projets académiques apparaîtront ici une fois ajoutés dans Sanity.
+              Les projets personnels et professionnels apparaîtront ici une fois ajoutés dans Sanity.
             </p>
           </div>
         )}

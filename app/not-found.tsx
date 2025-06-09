@@ -11,7 +11,7 @@ export default function NotFound() {
   return (
     <NotFoundComponent
       title="Error 404!"
-      description="Oops! This page does not exist. Try to go back to the homepage or check the URL."
+      description="Oups! Cette page n'existe pas. Essayez de retourner à la Home ou de l'URL."
     />
   );
 }

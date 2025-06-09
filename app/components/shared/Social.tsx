@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { socialLinks } from "../assets/Social";
 
-export default function Social({ type }: { type: "social" | "publication" }) {
+export default function Social({ type }: { type: "social" }) {
   return (
     <ul className="flex items-center flex-wrap gap-6">
       {socialLinks
