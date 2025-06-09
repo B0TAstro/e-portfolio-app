@@ -37,6 +37,31 @@ export type IUTType = {
   description: PortableTextBlock[];
 };
 
+export type AlternanceType = {
+  _id: string;
+  titre: string;
+  sousTitre?: string;
+  description: PortableTextBlock[];
+  entreprise?: string;
+  logoEntreprise?: {
+    alt: string | null;
+    image: string;
+  };
+  poste?: string;
+  periode?: string;
+  slider?: {
+    image: string;
+    alt: string;
+  }[];
+};
+
+export type PersoProType = {
+  _id: string;
+  titre: string;
+  sousTitre?: string;
+  description: PortableTextBlock[];
+};
+
 export type ProjectType = {
   _id: string;
   name: string;
@@ -68,4 +93,3 @@ export type ProjectType = {
 };
 
 export type CategoryType = 'iut' | 'alternance' | 'perso-pro';
-export type CompetenceType = 'developper' | 'entreprendre' | 'concevoir' | 'exprimer' | 'comprendre';

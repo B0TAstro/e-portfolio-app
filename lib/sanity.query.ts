@@ -41,6 +41,39 @@ export async function getIUTData() {
   );
 }
 
+export async function getAlternanceData() {
+  return client.fetch(
+    groq`*[_type == "alternance"][0]{
+      _id,
+      titre,
+      sousTitre,
+      description,
+      entreprise,
+      logoEntreprise {
+        alt,
+        "image": asset->url
+      },
+      poste,
+      periode,
+      slider[]{
+        "image": asset->url,
+        alt
+      }
+    }`
+  );
+}
+
+export async function getPersoProData() {
+  return client.fetch(
+    groq`*[_type == "persoPro"][0]{
+      _id,
+      titre,
+      sousTitre,
+      description
+    }`
+  );
+}
+
 export async function getProjectsByCategory(category: string) {
   return client.fetch(
     groq`*[_type == "project" && categorie == $category] | order(_createdAt desc){
