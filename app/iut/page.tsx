@@ -5,7 +5,7 @@ import Image from "next/image";
 import { getIUTData, getProjectsByCategory } from "@/lib/sanity.query";
 import type { IUTType, ProjectType } from "@/types";
 import { PortableText } from "@portabletext/react";
-import { HiAcademicCap, HiClock, HiCalendar } from "react-icons/hi";
+import { HiAcademicCap, HiClock } from "react-icons/hi";
 
 export default async function IUTPage() {
   const iutData: IUTType = await getIUTData();

@@ -70,6 +70,12 @@ const CompetenceItem = ({ competence }: CompetenceItemProps) => {
     const [isVisible, setIsVisible] = useState(false);
     const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
+    useEffect(() => {
+        return () => {
+            if (timeoutId) clearTimeout(timeoutId);
+        };
+    }, [timeoutId]);
+
     const config = competenceConfig[competence as keyof typeof competenceConfig];
 
     if (!config) return null;
@@ -89,12 +95,6 @@ const CompetenceItem = ({ competence }: CompetenceItemProps) => {
         const id = setTimeout(() => setIsVisible(false), 5000);
         setTimeoutId(id);
     };
-
-    useEffect(() => {
-        return () => {
-            if (timeoutId) clearTimeout(timeoutId);
-        };
-    }, [timeoutId]);
 
     const IconComponent = config.icon;
 

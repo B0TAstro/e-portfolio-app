@@ -31,6 +31,13 @@ const contexteLabels = {
   freelance: "Freelance/Auto-entrepreneur"
 };
 
+// Interface pour typer la description Sanity
+interface SanityBlock {
+  children?: Array<{
+    text?: string;
+  }>;
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;
   const slug = resolvedParams.project;
@@ -42,13 +49,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: "Ce projet n'existe pas ou a été supprimé."
     };
   }
+  
+  // Typage correct pour la description Sanity
+  const description = Array.isArray(project.description) && project.description.length > 0
+    ? (project.description[0] as SanityBlock)?.children?.[0]?.text || project.name
+    : project.name;
+
   return {
     title: `${project.name} | Projet IUT`,
-    description: (project.description as any)?.[0]?.children?.[0]?.text || project.name,
+    description,
     openGraph: {
       images: project.coverImage?.image ? [project.coverImage.image] : [],
       title: project.name,
-      description: (project.description as any)?.[0]?.children?.[0]?.text || project.name,
+      description,
     },
   };
 };
