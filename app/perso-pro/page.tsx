@@ -42,7 +42,7 @@ export default async function PersoProPage() {
           <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {projects.map((project) => (
               <Link
-                href={`/iut/${project.slug}`}
+                href={`/perso-pro/${project.slug}`}
                 key={project._id}
                 className="group bg-[#1d1d20] border border-zinc-800 hover:border-green-500/30 rounded-xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg flex"
               >

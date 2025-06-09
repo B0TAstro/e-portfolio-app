@@ -9,7 +9,7 @@ import { PortableText } from "@portabletext/react";
 import {
   HiArrowLeft,
   HiExternalLink,
-  HiAcademicCap,
+  HiUser,
   HiClock,
   HiCalendar,
   HiLightBulb,
@@ -103,7 +103,7 @@ export default async function ProjectPage({ params }: Props) {
 
         <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-8 text-sm text-zinc-400 mb-8">
           <div className="flex items-center gap-2">
-            <HiAcademicCap className="text-green-400" />
+            <HiUser className="text-green-400" />
             <span>{contexteLabels[project.contexte as keyof typeof contexteLabels] || project.contexte}</span>
           </div>
           <div className="flex items-center gap-2">
