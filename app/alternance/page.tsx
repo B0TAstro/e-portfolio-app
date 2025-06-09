@@ -79,11 +79,11 @@ export default async function AlternancePage() {
           <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {projects.map((project) => (
               <Link
-                href={`/alternance/${project.slug}`}
+                href={`/iut/${project.slug}`}
                 key={project._id}
-                className="group bg-[#1d1d20] border border-zinc-800 hover:border-green-500/30 rounded-xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
+                className="group bg-[#1d1d20] border border-zinc-800 hover:border-green-500/30 rounded-xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg flex"
               >
-                <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 mr-4">
                   {project.logo?.image ? (
                     <Image
                       src={project.logo.image}
@@ -93,39 +93,42 @@ export default async function AlternancePage() {
                       className="dark:bg-zinc-800 bg-zinc-100 rounded-md p-1"
                     />
                   ) : (
-                    <div className="w-14 h-14 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div className="w-14 h-14 bg-gradient-to-br from-green-400 to-yellow-500 rounded-lg flex items-center justify-center">
                       <span className="text-white font-bold text-xl">
                         {project.name.charAt(0).toUpperCase()}
                       </span>
                     </div>
                   )}
+                </div>
 
-                  <div className="flex-1 min-w-0">
+                <div className="flex-1 min-w-0 flex flex-col">
+                  <div className="flex-1">
                     <h3 className="font-bold text-lg mb-2 group-hover:text-green-400 transition-colors">
                       {project.name}
                     </h3>
-                    <p className="text-sm text-zinc-400 mb-4 line-clamp-2">
+                    <p className="text-sm text-zinc-400 line-clamp-2">
                       {project.tagline}
                     </p>
-                    <div className="flex items-center gap-5 text-xs text-zinc-500">
-                      {project.contexte && (
-                        <div className="flex items-center gap-2">
-                          <HiBriefcase className="flex-shrink-0 text-green-400" />
-                          <span>
-                            {project.contexte === 'entreprise' ? 'Mission en entreprise' :
-                              project.contexte === 'personnel' ? 'Projet personnel' :
-                                project.contexte === 'freelance' ? 'Freelance/Auto-entrepreneur' :
-                                  project.contexte}
-                          </span>
-                        </div>
-                      )}
+                  </div>
 
-                      {project.duree && (
-                        <div className="flex items-center gap-1">
-                          <HiClock className="flex-shrink-0 text-green-400" />
-                          <span>{project.duree}</span>
-                        </div>
-                      )}
+                  <div className="flex items-center gap-5 text-xs text-zinc-500 mt-4">
+                    {project.contexte && (
+                      <div className="flex items-center gap-2">
+                        <HiBriefcase className="flex-shrink-0 text-green-400" />
+                        <span>
+                          {project.contexte === 'sae' ? 'SAE' :
+                            project.contexte === 'ressource' ? 'Ressource pédagogique' :
+                              project.contexte === 'entreprise' ? 'Mission en entreprise' :
+                                project.contexte === 'personnel' ? 'Projet personnel' :
+                                  project.contexte === 'freelance' ? 'Freelance' :
+                                    project.contexte}
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="flex items-center gap-2">
+                      <HiClock className="flex-shrink-0 text-green-400" />
+                      <span>{project.duree}</span>
                     </div>
                   </div>
                 </div>
@@ -136,7 +139,7 @@ export default async function AlternancePage() {
           <div className="text-center py-12">
             <HiBriefcase className="mx-auto text-6xl text-zinc-600 mb-4" />
             <h3 className="text-xl font-semibold text-zinc-400 mb-2">
-              Aucun projet d'alternance pour le moment
+              Aucun projet d&apos;alternance pour le moment
             </h3>
             <p className="text-zinc-500">
               Les projets réalisés en entreprise apparaîtront ici une fois ajoutés dans Sanity.

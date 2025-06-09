@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
 
@@ -28,14 +28,15 @@ export default function ImageSlider({
     const goToPrevious = () =>
         setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
 
-    const goToNext = () =>
+    const goToNext = useCallback(() => {
         setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    }, [images.length]);
 
     useEffect(() => {
         if (!autoPlay || isHovered) return;
         const interval = setInterval(goToNext, autoPlayDelay);
         return () => clearInterval(interval);
-    }, [autoPlay, autoPlayDelay, images.length, isHovered]);
+    }, [autoPlay, autoPlayDelay, isHovered, goToNext]);
 
     return (
         <div
@@ -89,8 +90,8 @@ export default function ImageSlider({
                         key={index}
                         onClick={() => setCurrentIndex(index)}
                         className={`w-3 h-3 rounded-full transition ${index === currentIndex
-                                ? 'bg-green-400 scale-110'
-                                : 'bg-zinc-500 hover:bg-zinc-300'
+                            ? 'bg-green-400 scale-110'
+                            : 'bg-zinc-500 hover:bg-zinc-300'
                             }`}
                     />
                 ))}
