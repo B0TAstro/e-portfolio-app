@@ -14,26 +14,13 @@ import {
   HiCalendar,
   HiLightBulb,
   HiChartBar,
-  HiSpeakerphone,
   HiChatAlt
 } from "react-icons/hi";
-import {
-  BiCode,
-  BiPalette,
-  BiBrain
-} from "react-icons/bi";
 import { notFound } from "next/navigation";
+import CompetenceItem from "@/app/components/shared/CompetenceItem";
 
 type Props = {
   params: Promise<{ project: string }>;
-};
-
-const competenceConfig = {
-  developper: { icon: BiCode, color: "bg-blue-500/10 text-blue-400 border-blue-500/20", label: "Développer" },
-  entreprendre: { icon: HiLightBulb, color: "bg-green-500/10 text-green-400 border-green-500/20", label: "Entreprendre" },
-  concevoir: { icon: BiPalette, color: "bg-purple-500/10 text-purple-400 border-purple-500/20", label: "Concevoir" },
-  exprimer: { icon: HiSpeakerphone, color: "bg-orange-500/10 text-orange-400 border-orange-500/20", label: "Exprimer" },
-  comprendre: { icon: BiBrain, color: "bg-red-500/10 text-red-400 border-red-500/20", label: "Comprendre" },
 };
 
 const contexteLabels = {
@@ -86,7 +73,7 @@ export default async function ProjectPage({ params }: Props) {
       </Link>
 
       <section>
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-4">
           <h1 className="font-bold lg:text-5xl text-3xl lg:leading-tight">
             {project.name}
           </h1>
@@ -101,7 +88,7 @@ export default async function ProjectPage({ params }: Props) {
           </a>
         </div>
 
-        <div className="flex flex-wrap gap-8 text-sm text-zinc-400 mb-8">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-8 text-sm text-zinc-400 mb-8">
           <div className="flex items-center gap-2">
             <HiAcademicCap className="text-green-400" />
             <span>{contexteLabels[project.contexte as keyof typeof contexteLabels] || project.contexte}</span>
@@ -136,7 +123,7 @@ export default async function ProjectPage({ params }: Props) {
                   <HiChatAlt className="text-green-400" />
                   Description du projet
                 </h2>
-                <div className="prose prose-invert prose-lg max-w-none">
+                <div className="prose prose-invert prose-lg max-w-none break-words">
                   <PortableText value={project.description} />
                 </div>
               </div>
@@ -148,7 +135,7 @@ export default async function ProjectPage({ params }: Props) {
                   <HiLightBulb className="text-green-400" />
                   Démarches
                 </h2>
-                <div className="prose prose-invert prose-lg max-w-none">
+                <div className="prose prose-invert prose-lg max-w-none break-words">
                   <PortableText value={project.demarches} />
                 </div>
               </div>
@@ -160,7 +147,7 @@ export default async function ProjectPage({ params }: Props) {
                   <HiChartBar className="text-green-400" />
                   Résultats
                 </h2>
-                <div className="prose prose-invert prose-lg max-w-none">
+                <div className="prose prose-invert prose-lg max-w-none break-words">
                   <PortableText value={project.resultats} />
                 </div>
               </div>
@@ -192,24 +179,11 @@ export default async function ProjectPage({ params }: Props) {
           <div className="flex flex-col gap-y-4">
             {project.competences && project.competences.length > 0 && (
               <div className="bg-[#1d1d20] border border-zinc-800 rounded-xl p-6">
-                <h3 className="text-lg font-bold mb-4">Compétences</h3>
+                <h3 className="text-lg font-bold mb-4">Compétences utilisées</h3>
                 <div className="flex flex-wrap gap-3">
-                  {project.competences.map((competence, index) => {
-                    const config = competenceConfig[competence as keyof typeof competenceConfig];
-                    if (!config) return null;
-
-                    const IconComponent = config.icon;
-
-                    return (
-                      <div
-                        key={index}
-                        className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm border ${config.color}`}
-                      >
-                        <IconComponent className="w-4 h-4" />
-                        <span>{config.label}</span>
-                      </div>
-                    );
-                  })}
+                  {project.competences.map((competence, index) => (
+                    <CompetenceItem key={index} competence={competence} />
+                  ))}
                 </div>
               </div>
             )}
