@@ -83,7 +83,7 @@ export default async function Home() {
 
       <section className="mb-16">
         <h2 className="font-semibold text-4xl mb-4">Compétences & Technologies</h2>
-        <p className="text-zinc-400 w-1/2 mb-8">
+        <p className="text-zinc-400 mb-8">
           Les compétences, soft skills et technologies/outils que j&apos;ai appris et que je maîtrise :
         </p>
 
