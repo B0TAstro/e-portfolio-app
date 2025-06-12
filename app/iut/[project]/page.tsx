@@ -18,6 +18,7 @@ import {
 } from "react-icons/hi";
 import { notFound } from "next/navigation";
 import CompetenceItem from "@/app/components/shared/CompetenceItem";
+import ImageGallery from "@/app/components/shared/ImageGallery";
 
 type Props = {
   params: Promise<{ project: string }>;
@@ -49,7 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: "Ce projet n'existe pas ou a été supprimé."
     };
   }
-  
+
   // Typage correct pour la description Sanity
   const description = Array.isArray(project.description) && project.description.length > 0
     ? (project.description[0] as SanityBlock)?.children?.[0]?.text || project.name
@@ -169,22 +170,7 @@ export default async function ProjectPage({ params }: Props) {
             {project.galerie && project.galerie.length > 0 && (
               <div>
                 <h2 className="text-2xl font-bold mb-2">Galerie</h2>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {project.galerie.map((image, index) => (
-                    <div key={index} className="space-y-2">
-                      <Image
-                        src={image.image}
-                        width={600}
-                        height={400}
-                        alt={image.alt || `Image ${index + 1}`}
-                        className="w-full h-64 object-cover rounded-lg border border-zinc-800"
-                      />
-                      {image.caption && (
-                        <p className="text-sm text-zinc-400 italic">{image.caption}</p>
-                      )}
-                    </div>
-                  ))}
-                </div>
+                <ImageGallery images={project.galerie} />
               </div>
             )}
           </div>
@@ -219,6 +205,6 @@ export default async function ProjectPage({ params }: Props) {
           </div>
         </div>
       </section>
-    </main>
+    </main >
   );
 }
